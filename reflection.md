@@ -36,21 +36,28 @@ In check_guess, the fix for the backwards hints is to swap the return values so 
 ## 3. Debugging and testing your fixes
 
 - How did you decide whether a bug was really fixed?
+I ran the live game manually and confirmed the correct behavior, then ran pytest to verify the logic passed automated tests too.
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
+I ran python -m pytest and all 7 tests passed. test_guess_too_high confirmed that guessing 60 against a secret of 50 correctly returns "Too High" with "LOWER" in the message.
 - Did AI help you design or understand any tests? How?
+Yes, Claude pointed out that check_guess returns a tuple not a plain string, so I needed to unpack it as outcome, message = check_guess(60, 50) instead of comparing directly.
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+Streamlit reruns the entire script from top to bottom every time a user clicks a button or types something. Session state is like a storage box that saves important values like the score and attempts between those reruns, so they don't reset every time the page refreshes.
 
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
+Adding # FIXME: comments before touching any code so I always know exactly where the problem is before asking AI for help.
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
+I would test AI suggestions immediately by running the code instead of accepting them and moving on, since some suggestions looked correct but had subtle bugs.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+AI generated code can look clean and correct but still have sneaky logic bugs that only show up when you actually run and test it. You always need to verify it yourself.
